@@ -330,7 +330,11 @@ getbootloader()
 	if [ -r "/etc/sysconfig/bootloader" ]; then
 		. /etc/sysconfig/bootloader
 	else
-		LOADER_TYPE="grub"
+		if reqcmd -t grub2-mkconfig; then
+			LOADER_TYPE="grub2"
+		else
+			LOADER_TYPE="grub"
+		fi
 	fi
 
 	echo $LOADER_TYPE
